@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.8/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+  <div class="container">
+<div id="app">
+  
+   <div class="mb-3">
+    <label for="search" class="form-label" >Search</label>
+    <input v-model="searchTerm"  class="form-control" id="search">
+
+  </div>
+  <table class="table">
+    <thead><tr>
+      <th>Org Code</th>
+      <th>Org Name</th>
+      <th>Office Symbol</th>
+    </tr></thead>
+    <tbody>
+      <tr v-for="org in filteredOrgs" :key="org.OrgCode">
+        <td>{{org.OrgCode}}</td>
+        <td>{{org.OrgName}}</td>
+        <td>{{org.OfficeSymbol}}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+ 
+</div>
+ </div>
+	<script>
+    
+const orgs = [
+ {
+   "OrgCode": "J100000",
+   "OrgName": "USAED, FAR EAST DISTRICT",
+   "OfficeSymbol": "CEPOF"
+ },
+ {
+   "OrgCode": "J10000A",
+   "OrgName": "EXECUTIVE OFFICE",
+   "OfficeSymbol": "CEPOF-Z"
+ },
+ {
+   "OrgCode": "J170000",
+   "OrgName": "LOGISTICS MANAGEMENT OFFICE",
+   "OfficeSymbol": "CEPOF-LM"
+ },
+ {
+   "OrgCode": "J170100",
+   "OrgName": "LMO, TRANSPORTATION BR",
+   "OfficeSymbol": "CEPOF-LMT"
+ },
+ {
+   "OrgCode": "J170120",
+   "OrgName": "LMO, TRANS BR, OP & MAINT SEC",
+   "OfficeSymbol": "CEPOF-LMT-O"
+ },
+ {
+   "OrgCode": "J170200",
+   "OrgName": "LMO, SUPPLY & SUPPORT BRANCH",
+   "OfficeSymbol": "CEPOF-LMS"
+ },
+ {
+   "OrgCode": "J170210",
+   "OrgName": "LMO, SUPPL Y&SUPT BR.SUPPLY SEC",
+   "OfficeSymbol": "CEPOF-LMS-S"
+ },
+ {
+   "OrgCode": "J180000",
+   "OrgName": "INTERNAL REVIEW",
+   "OfficeSymbol": "CEPOF-IR"
+ },
+ {
+   "OrgCode": "J1A0100",
+   "OrgName": "EQUAL EMP OPPORTUNITY OFFICE",
+   "OfficeSymbol": "CEPOF-EO"
+ },
+ {
+   "OrgCode": "J1B00O0",
+   "OrgName": "RESOURCE MANAGEMENT OFFICE",
+   "OfficeSymbol": "CEPOF-RM"
+ },
+ {
+   "OrgCode": "J1B0B00",
+   "OrgName": "RMO, BUDGET & MANPOWER BRANCH",
+   "OfficeSymbol": "CEPOF-RMB"
+ },
+ {
+   "OrgCode": "J1B0FO0",
+   "OrgName": "RMO, FINANCE AND ACCOUNTING BR",
+   "OfficeSymbol": "CEPOF-RMF"
+ },
+ {
+   "OrgCode": "J1C00O0",
+   "OrgName": "PUBLIC AFFAIRS",
+   "OfficeSymbol": "CEPOF-PA"
+ },
+ {
+   "OrgCode": "J1D0000",
+   "OrgName": "SAFETY & OCCUP HEAL TH OFFICE",
+   "OfficeSymbol": "CEPOF-SO"
+ },
+ {
+   "OrgCode": "J1E0OO0",
+   "OrgName": "OFFICE OF COUNSEL",
+   "OfficeSymbol": "CEPOF-OC"
+ },
+ {
+   "OrgCode": "J1F00O0",
+   "OrgName": "WORKFORCE MANAGEMENT",
+   "OfficeSymbol": "CEPOF-WM"
+ },
+ {
+   "OrgCode": "J1H0OO0",
+   "OrgName": "PROGRAMS & PROJECT MGT DIV",
+   "OfficeSymbol": "CEPOF-PP"
+ },
+ {
+   "OrgCode": "J1H0AO0",
+   "OrgName": "PPMD ARMY, NAVY AND MARINE BR.",
+   "OfficeSymbol": "CEPOF-PPA"
+ },
+ {
+   "OrgCode": "J1H0FO0",
+   "OrgName": "PPMD, AIR FORCE, BP & RPT BR.",
+   "OfficeSymbol": "CEPOF-PPF"
+ },
+ {
+   "OrgCode": "J1H0I0O",
+   "OrgName": "PPM, INSTALLATIONS SUPPORT BR.",
+   "OfficeSymbol": "CEPOF-PPI"
+ },
+ {
+   "OrgCode": "J1H0PO0",
+   "OrgName": "PPM, PROGRAM SUPPORT BRANCH",
+   "OfficeSymbol": "CEPOF-PPP"
+ },
+ {
+   "OrgCode": "J1H0RO0",
+   "OrgName": "PPMD, RELOCATION PROGRAMS BR.",
+   "OfficeSymbol": "CEPOF-PPR"
+ },
+ {
+   "OrgCode": "J1H0SO0",
+   "OrgName": "PPM, SECURITY OPERATIONS BR.",
+   "OfficeSymbol": "CEPOF-PPS"
+ },
+ {
+   "OrgCode": "J110000",
+   "OrgName": "INFORMATION MANAGEMENT OFFICE",
+   "OfficeSymbol": "CEPOF-IM"
+ },
+ {
+   "OrgCode": "J110CO0",
+   "OrgName": "IMO, CUSTOMER SERVICE BRANCH",
+   "OfficeSymbol": "CEPOF-IMC"
+ },
+ {
+   "OrgCode": "J1IOOO0",
+   "OrgName": "IMO, OPERATIONS SERVICE BRANCH",
+   "OfficeSymbol": "CEPOF-IMO"
+ },
+ {
+   "OrgCode": "J1L00O0",
+   "OrgName": "ENGINEERING DIVISION",
+   "OfficeSymbol": "CEPOF-ED"
+ },
+ {
+   "OrgCode": "J1L0CO0",
+   "OrgName": "ED, COST ENGINEERING BR",
+   "OfficeSymbol": "CEPOF-EDC"
+ },
+ {
+   "OrgCode": "J1L0DO0",
+   "OrgName": "ED, DESIGN BR",
+   "OfficeSymbol": "CEPOF-EDD"
+ },
+ {
+   "OrgCode": "J1L0DL0",
+   "OrgName": "ED, DESIGN BR ELECTRICAL SEC",
+   "OfficeSymbol": "CEPOF-EDD-E"
+ },
+ {
+   "OrgCode": "J1LODN0",
+   "OrgName": "ED, DESIGN BR, MECHANICAL SEC",
+   "OfficeSymbol": "CEPOF-EDD-M"
+ },
+ {
+   "OrgCode": "J1L0DRO",
+   "OrgName": "ED,DESIGN BR.ARCHITECTURAL SEC",
+   "OfficeSymbol": "CEPOF-EDD-A"
+ },
+ {
+   "OrgCode": "J1L0DS0",
+   "OrgName": "ED, DESIGN BR, SPECIFICATIONS",
+   "OfficeSymbol": "CEPOF-EDD-S"
+ },
+ {
+   "OrgCode": "J1L0DV0",
+   "OrgName": "ED.DESIGN BR,CIV/STRUCTURA SEC",
+   "OfficeSymbol": "CEPOF-EDD-C"
+ },
+ {
+   "OrgCode": "J1 L0EO",
+   "OrgName": "ED, ENGINEERING SERVICE BR",
+   "OfficeSymbol": "CEPOF-EDE"
+ },
+ {
+   "OrgCode": "J1L0GO0",
+   "OrgName": "ED, GEOTECH & ENVIRON ENG BR",
+   "OfficeSymbol": "CEPOF-EDG"
+ },
+ {
+   "OrgCode": "J1L0GD0",
+   "OrgName": "ED,G&E BR,GEOMATICS & SPT SEC",
+   "OfficeSymbol": "CEPOF-EDG-D"
+ },
+ {
+   "OrgCode": "J1L0GE0",
+   "OrgName": "ED, G&E, ENVIRONMENTAL SECTION",
+   "OfficeSymbol": "CEPOF-EDG-E"
+ },
+ {
+   "OrgCode": "J1L0GGO",
+   "OrgName": "ED,G&E, GEOTECHNICAL SECTION",
+   "OfficeSymbol": "CEPOF-EDG-G"
+ },
+ {
+   "OrgCode": "J1L0GH0",
+   "OrgName": "ED, G&E, GEO & HYDROLOGY SEC",
+   "OfficeSymbol": "CEPOF-EDG-H"
+ },
+ {
+   "OrgCode": "J1L0T00",
+   "OrgName": "ED, TECHNICAL SERVICES BR",
+   "OfficeSymbol": "CEPOF-EDT"
+ },
+ {
+   "OrgCode": "J1L0TA0",
+   "OrgName": "ED, TSB AE SERVICE SEC",
+   "OfficeSymbol": "CEPOF-EDT-A"
+ },
+ {
+   "OrgCode": "J1L0TB0",
+   "OrgName": "ED, TECH REV, DESIGN MGMT SEC",
+   "OfficeSymbol": "CEPOF-EDT-B"
+ },
+ {
+   "OrgCode": "J1L0TT0",
+   "OrgName": "ED, TSB, TECHNICAL REVIEW SEC",
+   "OfficeSymbol": "CEPOF-EDT-T"
+ },
+ {
+   "OrgCode": "J1M1000",
+   "OrgName": "CONSTRUCTION DIVISION",
+   "OfficeSymbol": "CEPOF-CD"
+ },
+ {
+   "OrgCode": "J1M1COO",
+   "OrgName": "CD, CENTRAL RESIDENT OFFICE",
+   "OfficeSymbol": "CEPOF-CDC"
+ },
+ {
+   "OrgCode": "J1M1KO0",
+   "OrgName": "CD, KUNSAN RESIDENT OFFICE",
+   "OfficeSymbol": "CEPOF-CDK"
+ },
+ {
+   "OrgCode": "J1M1QO0",
+   "OrgName": "CD, QUALITY ASSURANCE BR",
+   "OfficeSymbol": "CEPOF-CDQ"
+ },
+ {
+   "OrgCode": "J1M1QA0",
+   "OrgName": "CD, QAB, ARCHITECT/CIVIL SEC",
+   "OfficeSymbol": "CEPOF-CDQ-A"
+ },
+ {
+   "OrgCode": "J1M1QMO",
+   "OrgName": "CD,QAB,MECHANICAUELECTRIC SEC",
+   "OfficeSymbol": "CEPOF-CDQ-M"
+ },
+ {
+   "OrgCode": "J1M1RO0",
+   "OrgName": "CD, CONSTRUCTION SVCS BR",
+   "OfficeSymbol": "CEPOF-CDV"
+ },
+ {
+   "OrgCode": "J1M1SO0",
+   "OrgName": "CD, SOUTHERN RESIDENT OFFICE",
+   "OfficeSymbol": "CEPOF-CDS"
+ },
+ {
+   "OrgCode": "J1M1UO0",
+   "OrgName": "CD, HUMPHREYS AREA OFFICE",
+   "OfficeSymbol": "CEPOF-CDU"
+ },
+ {
+   "OrgCode": "J1M1UF0",
+   "OrgName": "CD, HAO, FAMILY HOUSING RES OF",
+   "OfficeSymbol": "CEPOF-CDU-F"
+ },
+ {
+   "OrgCode": "J1M1UP0",
+   "OrgName": "CD, HAO, PYONGTAEK RES OFC",
+   "OfficeSymbol": "CEPOF-CDU-P"
+ },
+ {
+   "OrgCode": "J1M1US0",
+   "OrgName": "CD, HAO, SECURITY OPER RES OFC",
+   "OfficeSymbol": "CEPOF-CDU-S"
+ },
+ {
+   "OrgCode": "J1P00O0",
+   "OrgName": "DC, CONTRACTING DIVISION",
+   "OfficeSymbol": "CEPOF-CT"
+ },
+ {
+   "OrgCode": "J1R00O0",
+   "OrgName": "SECURITY,PLANS&OPERATIONS OFC.",
+   "OfficeSymbol": "CEPOF-SP"
+ }
+];
+
+
+
+let app = new Vue({
+  el:'#app',
+  data:{
+    orgs,
+    searchTerm:''
+  },
+  computed:{
+    filteredOrgs(){
+      let st = this.searchTerm.toLowerCase()
+      const o = this.orgs
+      if(!st) return o
+      return o.filter(({OrgCode,OrgName,OfficeSymbol})=>{ return OrgCode.toLowerCase().indexOf(st) > -1 || 
+                                                          OrgName.toLowerCase().indexOf(st) > -1 || 
+                                                          OfficeSymbol.toLowerCase().indexOf(st) > -1 })
+     
+    }
+  }
+})
+  
+  </script>
+  </body>
+</html>
